@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>高七师佛学心理学</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #FFF8DC 0%, #FAEBD7 100%);
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* 佛教风格背景 */
+        .lotus-bg {
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 50%, rgba(196, 30, 58, 0.1) 0%, transparent 50%);
+        }
+        
+        /* 隐藏滚动条但保持可滚动 */
+        ::-webkit-scrollbar {
+            width: 0;
+            display: none;
+        }
+        
+        /* 卡片样式 */
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        
+        .card:active {
+            transform: scale(0.98);
+        }
+        
+        /* 底部导航栏 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 8px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .nav-item.active {
+            color: #C41E3A;
+        }
+        
+        .nav-item i {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .nav-item span {
+            font-size: 12px;
+        }
+        
+        /* TTS播放按钮 */
+        .tts-button {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #C41E3A, #E63950);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(196, 30, 58, 0.4);
+            cursor: pointer;
+            z-index: 999;
+            transition: all 0.3s;
+        }
+        
+        .tts-button:active {
+            transform: scale(0.95);
+        }
+        
+        .tts-button.playing {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        /* 页面容器 */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 16px;
+            padding-bottom: 80px;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        /* 加载动画 */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #C41E3A;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 文章内容样式 */
+        .article-content {
+            line-height: 1.8;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .article-content p {
+            margin-bottom: 16px;
+        }
+        
+        .article-content h1,
+        .article-content h2,
+        .article-content h3 {
+            margin: 24px 0 16px;
+            font-weight: bold;
+            color: #2C1810;
+        }
+    </style>
+</head>
+<body class="lotus-bg">
+    <!-- 首页 -->
+    <div id="home-page" class="page active">
+        <div class="text-center py-6">
+            <h1 class="text-3xl font-bold text-gray-800">🙏 高七师佛学心理学</h1>
+            <p class="text-gray-600 mt-2">探索心灵 · 觉悟人生</p>
+        </div>
+        
+        <div id="home-content"></div>
+    </div>
+    
+    <!-- 分类页 -->
+    <div id="category-page" class="page">
+        <div class="text-center py-6">
+            <h1 class="text-2xl font-bold text-gray-800">📚 文章分类</h1>
+        </div>
+        <div id="category-content"></div>
+    </div>
+    
+    <!-- 文章详情页 -->
+    <div id="article-page" class="page">
+        <div id="article-content"></div>
+    </div>
+    
+    <!-- 资源页 -->
+    <div id="files-page" class="page">
+        <div class="text-center py-6">
+            <h1 class="text-2xl font-bold text-gray-800">📁 资源下载</h1>
+        </div>
+        <div id="files-content"></div>
+    </div>
+    
+    <!-- 我的页面 -->
+    <div id="profile-page" class="page">
+        <div class="text-center py-6">
+            <h1 class="text-2xl font-bold text-gray-800">👤 我的</h1>
+        </div>
+        <div id="profile-content" class="space-y-4">
+            <div class="card p-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700">🔊 语音播放</span>
+                    <span class="text-gray-500">已开启</span>
+                </div>
+            </div>
+            <div class="card p-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700">📱 版本</span>
+                    <span class="text-gray-500">1.0.0</span>
+                </div>
+            </div>
+            <div class="card p-4">
+                <div class="flex items-center justify-between">
+                    <span class="text-gray-700">🌐 网站</span>
+                    <span class="text-gray-500">gaoqishi.pages.dev</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- TTS播放按钮 -->
+    <div id="tts-button" class="tts-button" style="display: none;" onclick="toggleTTS()">
+        <i id="tts-icon" class="fas fa-play"></i>
+    </div>
+    
+    <!-- 底部导航 -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="showPage('home')">
+            <i class="fas fa-home"></i>
+            <span>首页</span>
+        </div>
+        <div class="nav-item" onclick="showPage('category')">
+            <i class="fas fa-th-large"></i>
+            <span>分类</span>
+        </div>
+        <div class="nav-item" onclick="showPage('files')">
+            <i class="fas fa-folder"></i>
+            <span>资源</span>
+        </div>
+        <div class="nav-item" onclick="showPage('profile')">
+            <i class="fas fa-user"></i>
+            <span>我的</span>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+    <script src="./app.js"></script>
+</body>
+</html>

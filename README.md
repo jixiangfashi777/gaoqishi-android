@@ -2,6 +2,12 @@
 
 一个功能完整的Android应用，包含文章浏览、分类查看、资源下载和**TTS语音播放**功能。
 
+## 🌐 在线体验
+
+- **GitHub仓库**: https://github.com/jixiangfashi777/gaoqishi-android
+- **在线演示**: https://jixiangfashi777.github.io/gaoqishi-android/ （需先启用GitHub Pages）
+- **原网站**: https://gaoqishi.pages.dev
+
 ## ✨ 主要功能
 
 ### 核心功能
@@ -29,12 +35,17 @@
 
 ```
 gaoqishi-android/
-├── index.html          # 主HTML文件
-├── app.js              # 核心JavaScript逻辑（包含TTS）
-├── package.json        # NPM配置
-├── README.md           # 本文件
-├── 打包APK指南.md      # 详细的APK打包指南
-└── vite.config.js      # Vite构建配置（如需）
+├── index.html              # 主HTML文件（带PWA支持）
+├── app.js                  # 核心JavaScript逻辑（包含TTS）
+├── manifest.json           # PWA配置文件
+├── sw.js                   # Service Worker（离线支持）
+├── icon-192.png            # 应用图标 192x192
+├── icon-512.png            # 应用图标 512x512
+├── package.json            # NPM配置
+├── README.md               # 本文件
+├── PWA_BUILDER_指南.md     # ⭐ PWA Builder完整使用指南（推荐）
+├── 打包APK指南.md          # 其他APK打包方法
+└── generate_icons.html     # 图标生成工具
 ```
 
 ## 🚀 快速开始
@@ -77,19 +88,39 @@ gaoqishi-android/
 
 ## 📦 打包APK
 
-详细的打包指南请查看 `打包APK指南.md`
+### ⚡ 快速开始（推荐）
 
-### 最快速方式（推荐）
+**使用PWA Builder在线打包 - 详细图文指南请查看 [`PWA_BUILDER_指南.md`](./PWA_BUILDER_指南.md)**
 
-**使用PWA Builder在线打包**:
+#### 简要步骤：
 
-1. 部署到GitHub Pages或Cloudflare Pages
-2. 访问 https://www.pwabuilder.com/
-3. 输入您的APP URL
-4. 选择Android平台
-5. 下载生成的APK
+1️⃣ **启用GitHub Pages**
+   - 访问：https://github.com/jixiangfashi777/gaoqishi-android/settings/pages
+   - Source: Deploy from a branch → main → / (root) → Save
+   - 等待1-2分钟部署完成
 
-**总耗时**: 15-30分钟
+2️⃣ **访问PWA Builder**
+   - 打开：https://www.pwabuilder.com/
+   - 输入：https://jixiangfashi777.github.io/gaoqishi-android/
+   - 点击"Start"开始分析
+
+3️⃣ **配置并下载APK**
+   - 选择Android平台 → Store Package
+   - 配置应用信息（名称、包ID等）
+   - 点击Download下载APK
+
+4️⃣ **安装到手机**
+   - 允许安装未知来源应用
+   - 传输APK到手机并安装
+   - 测试TTS等功能
+
+**总耗时**: 15-30分钟 | **完整指南**: [`PWA_BUILDER_指南.md`](./PWA_BUILDER_指南.md)
+
+---
+
+### 📝 其他打包方式
+
+详细的打包指南请查看 `打包APK指南.md`（包含Cordova等方式）
 
 ### 使用Cordova本地打包
 
